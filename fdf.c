@@ -15,13 +15,13 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-static int		ft_check(const int fd)
+static int	ft_check(const int fd)
 {
-	char	**map;
+	char	*map;
 	char	**tmp;
 	char	*line;
-	int		rows;
-	int		i;
+	int	rows;
+	int	i;
 
 	rows = 0;
 	i = 0;
@@ -29,8 +29,8 @@ static int		ft_check(const int fd)
 	map = NULL;
 	while (get_next_line(fd, &line) != 0)
 	{	
-		*tmp = ft_strsplit(line, ' ');
-		ft_strjoin(*map, *line);
+		tmp = ft_strsplit(line, ' ');
+		ft_strjoin(map, line);
 		ft_strdel(&line);
 		while (tmp[i])
 			i++;
@@ -39,19 +39,19 @@ static int		ft_check(const int fd)
 		else if (rows != i)
 			return (0);
 		ft_strdel(tmp);
-		ft_strsplit(**map, ' ');
+		ft_strsplit(map, ' ');
 		return (rows);
 	}
 }
 
-int			main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	char	**map;
-	int		rows;
+	int	rows;
 	int 	n;
-	int		fd;
+	int	fd;
 
 	if (argc == 2)
 	{
