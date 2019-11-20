@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:30:21 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/11/17 00:18:12 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/11/19 18:54:34 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,27 @@ static int		ft_check(const int fd)
 	char	**map;
 	char	**tmp;
 	char	*line;
-	int		n;
+	int		rows;
 	int		i;
 
-	n = 0;
+	rows = 0;
 	i = 0;
 	tmp = NULL;
 	map = NULL;
 	while (get_next_line(fd, &line) != 0)
 	{	
-		*tmp = ft_strjoin(ft_strsplit(line, ' '), ".");
+		*tmp = ft_strsplit(line, ' ');
+		ft_strjoin(*map, *line);
 		ft_strdel(&line);
-		ft_strjoin(*map, *tmp);
 		while (tmp[i])
 			i++;
-		if (n == 0)
-			n = i;
-		else if (n != i)
+		if (rows == 0)
+			rows = i;
+		else if (rows != i)
 			return (0);
 		ft_strdel(tmp);
+		ft_strsplit(**map, ' ');
+		return (rows);
 	}
 }
 
@@ -47,6 +49,7 @@ int			main(int argc, char **argv)
 	void	*mlx_ptr;
 	void	*win_ptr;
 	char	**map;
+	int		rows;
 	int 	n;
 	int		fd;
 
@@ -54,7 +57,7 @@ int			main(int argc, char **argv)
 	{
 		n = 0;
 		fd = open(argv[1], O_RDONLY);
-		if (!(map = ft_check(fd)))
+		if (!(rows = ft_check(fd)))
 			ft_putchar("Invalid file\n");
 		else
 			printf("%s\n", map);
