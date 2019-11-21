@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:30:21 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/11/19 18:54:34 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/11/20 17:13:49 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int	ft_check(const int fd)
 	char	*map;
 	char	**tmp;
 	char	*line;
-	int	rows;
-	int	i;
+	int		rows;
+	int		i;
 
 	rows = 0;
 	i = 0;
@@ -40,8 +40,11 @@ static int	ft_check(const int fd)
 			return (0);
 		ft_strdel(tmp);
 		ft_strsplit(map, ' ');
-		return (rows);
 	}
+	if (rows == 0)
+		return (0);
+	else
+		return (rows);
 }
 
 int		main(int argc, char **argv)
@@ -49,18 +52,18 @@ int		main(int argc, char **argv)
 	void	*mlx_ptr;
 	void	*win_ptr;
 	char	**map;
-	int	rows;
+	int		rows;
 	int 	n;
-	int	fd;
+	int		fd;
 
 	if (argc == 2)
 	{
 		n = 0;
 		fd = open(argv[1], O_RDONLY);
 		if (!(rows = ft_check(fd)))
-			ft_putchar("Invalid file\n");
+			ft_putstr("Invalid file\n");
 		else
-			printf("%s\n", map);
+			printf("%s\n", *map);
 
 //		mlx_ptr = mlx_init();
 //		win_ptr = mlx_new_window(mlx_ptr, 500, 500, "fdf");
@@ -72,5 +75,5 @@ int		main(int argc, char **argv)
 //		mlx_loop(mlx_ptr);
 	}
 	else
-		ft_putchar("Usage : ./fdf <filename> [ case_size z_size ]\n");
+		ft_putstr("Usage : ./fdf <filename> [ case_size z_size ]\n");
 }
