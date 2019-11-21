@@ -15,9 +15,8 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-static int	ft_check(const int fd)
+static int	ft_check(const int fd, char ***map)
 {
-	char	*map;
 	char	**tmp;
 	char	*line;
 	int		rows;
@@ -26,11 +25,10 @@ static int	ft_check(const int fd)
 	rows = 0;
 	i = 0;
 	tmp = NULL;
-	map = NULL;
 	while (get_next_line(fd, &line) != 0)
 	{	
+		ft_strjoin(***map, line);
 		tmp = ft_strsplit(line, ' ');
-		ft_strjoin(map, line);
 		ft_strdel(&line);
 		while (tmp[i])
 			i++;
@@ -39,11 +37,12 @@ static int	ft_check(const int fd)
 		else if (rows != i)
 			return (0);
 		ft_strdel(tmp);
-		ft_strsplit(map, ' ');
+		i = 0;
 	}
 	if (rows == 0)
 		return (0);
 	else
+		ft_strsplit(**map, ' ');
 		return (rows);
 }
 
@@ -56,11 +55,12 @@ int		main(int argc, char **argv)
 	int 	n;
 	int		fd;
 
+	map = NULL;
 	if (argc == 2)
 	{
 		n = 0;
 		fd = open(argv[1], O_RDONLY);
-		if (!(rows = ft_check(fd)))
+		if (!(rows = ft_check(fd, &map)))
 			ft_putstr("Invalid file\n");
 		else
 			printf("%s\n", *map);
