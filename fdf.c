@@ -27,7 +27,10 @@ static int	ft_check(const int fd, char ***map)
 	tmp = NULL;
 	while (get_next_line(fd, &line) != 0)
 	{	
-		ft_strjoin(***map, line);
+		if (!**map)
+			**map = ft_strdup(line);
+		else
+			**map = ft_strjoin(line, 
 		tmp = ft_strsplit(line, ' ');
 		ft_strdel(&line);
 		while (tmp[i])
@@ -52,13 +55,11 @@ int		main(int argc, char **argv)
 	void	*win_ptr;
 	char	**map;
 	int		rows;
-	int 	n;
 	int		fd;
 
 	map = NULL;
 	if (argc == 2)
 	{
-		n = 0;
 		fd = open(argv[1], O_RDONLY);
 		if (!(rows = ft_check(fd, &map)))
 			ft_putstr("Invalid file\n");
