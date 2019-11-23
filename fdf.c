@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:30:21 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/11/20 17:13:49 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/11/22 16:09:23 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ static int	ft_check(const int fd, char ***map)
 	tmp = NULL;
 	while (get_next_line(fd, &line) != 0)
 	{	
-		if (!**map)
+		if (*map)	
+			**map = ft_strjoin(&(***map), line); 
+		else if (!*map)
 			**map = ft_strdup(line);
-		else
-			**map = ft_strjoin(line, 
 		tmp = ft_strsplit(line, ' ');
 		ft_strdel(&line);
 		while (tmp[i])
