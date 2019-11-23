@@ -15,7 +15,7 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-static int	ft_check(const int fd, char ***map)
+static int	ft_check(const int fd, char **map)
 {
 	char	**tmp;
 	char	*line;
@@ -27,10 +27,7 @@ static int	ft_check(const int fd, char ***map)
 	tmp = NULL;
 	while (get_next_line(fd, &line) != 0)
 	{	
-		if (*map)	
-			**map = ft_strjoin(&(***map), line); 
-		else if (!*map)
-			**map = ft_strdup(line);
+		**map = ft_strjoin(**map, line); 
 		tmp = ft_strsplit(line, ' ');
 		ft_strdel(&line);
 		while (tmp[i])
@@ -53,11 +50,11 @@ int		main(int argc, char **argv)
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-	char	**map;
+	char	*map;
 	int		rows;
 	int		fd;
 
-	map = NULL;
+	bzero(map, 1);	
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
