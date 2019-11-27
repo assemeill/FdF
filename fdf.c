@@ -15,22 +15,25 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-static int	ft_check(const int fd, char **map)
+static int	ft_check(const int fd, char ***map)
 {
 	char	**tmp;
+	char	**str;
+	char	**tmp2;
 	char	*line;
 	int		rows;
 	int		i;
 
 	rows = 0;
 	i = 0;
+	*map = NULL;
 	while (get_next_line(fd, &line) != 0)
 	{	
-		*tmp = *map;
-		*map = ft_strjoin(*map, line);
-		ft_strdel(tmp);
 		tmp = ft_strsplit(line, ' ');
+		tmp2 = *map;
+		*map = ft_arrayjoin(*map, tmp);
 		ft_strdel(&line);
+		ft_strdel(tmp2);
 		while (tmp[i])
 			i++;
 		if (rows == 0)
@@ -50,7 +53,7 @@ int		main(int argc, char **argv)
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-	char	*map;
+	char	**map;
 	int		rows;
 	int		fd;
 
@@ -60,7 +63,7 @@ int		main(int argc, char **argv)
 		if (!(rows = ft_check(fd, &map)))
 			ft_putstr("Invalid file\n");
 		else
-			printf("%s\n", map);
+			printf("%s\n", *map);
 
 //		mlx_ptr = mlx_init();
 //		win_ptr = mlx_new_window(mlx_ptr, 500, 500, "fdf");
