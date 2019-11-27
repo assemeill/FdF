@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:30:21 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/11/22 16:09:23 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/11/22 20:30:54 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ static int	ft_check(const int fd, char **map)
 
 	rows = 0;
 	i = 0;
-	tmp = NULL;
 	while (get_next_line(fd, &line) != 0)
 	{	
-		**map = ft_strjoin(**map, line); 
+		*tmp = *map;
+		*map = ft_strjoin(*map, line);
+		ft_strdel(tmp);
 		tmp = ft_strsplit(line, ' ');
 		ft_strdel(&line);
 		while (tmp[i])
@@ -42,7 +43,6 @@ static int	ft_check(const int fd, char **map)
 	if (rows == 0)
 		return (0);
 	else
-		ft_strsplit(**map, ' ');
 		return (rows);
 }
 
@@ -54,14 +54,13 @@ int		main(int argc, char **argv)
 	int		rows;
 	int		fd;
 
-	bzero(map, 1);	
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
 		if (!(rows = ft_check(fd, &map)))
 			ft_putstr("Invalid file\n");
 		else
-			printf("%s\n", *map);
+			printf("%s\n", map);
 
 //		mlx_ptr = mlx_init();
 //		win_ptr = mlx_new_window(mlx_ptr, 500, 500, "fdf");

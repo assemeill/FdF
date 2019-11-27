@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_letters_count.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/12 16:17:07 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/11/26 13:00:34 by aszhilki         ###   ########.fr       */
+/*   Created: 2019/11/26 11:39:55 by aszhilki          #+#    #+#             */
+/*   Updated: 2019/11/26 12:33:25 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strcpy(char *dest, const char *src)
+int		ft_letters_count(char const *s)
 {
-	int i;
+	int n;
 
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	n = 0;
+	while (s[n])
+		n++;
+	return (n);
 }

@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 14:39:28 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/11/22 15:27:37 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/11/26 13:01:49 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 size_t				ft_strlen(const char *c);
 char				*ft_strdup(const char *src);
-char				*ft_strcpy(char *dest, char *src);
+char				*ft_strcpy(char *dest, const char *src);
 char				*ft_strncpy(char *dest, const char *src, size_t n);
 char				*ft_strcat(char *dst, char *src);
 char				*ft_strncat(char *dst, char *src, size_t n);
@@ -64,6 +64,7 @@ int					ft_strnequ(char const *s1, char const *s2, size_t n);
 int					ft_strequ(char const *s1, char const *s2);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
+char				**ft_arrayjoin(char const **s1, char const **s2);
 char				*ft_strtrim(char const *s);
 int					ft_isspace(int ch);
 char				**ft_strsplit(char const *s, char c);
@@ -72,6 +73,7 @@ int					ft_if_negative(int n);
 int					ft_int_size(int n);
 char				*ft_base(char *str, int n, int i, int j);
 int					ft_words_count(char const *s, char c);
+int					ft_letters_count(char const *s);
 void				ft_putchar(char c);
 void				ft_putstr(char const *s);
 void				ft_putendl(char const *s);
