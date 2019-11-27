@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static int	ft_count(const char **s1, const char **s2)
+static int	ft_count(char **s1, char **s2)
 {
 	int		n;
 	int		i;
@@ -21,15 +21,15 @@ static int	ft_count(const char **s1, const char **s2)
 	i = 0;
 	if (!s1 && !s2)
 		return (0);
-	while (!s1[i++])
+	while (s1[i++])
 		n++;
 	i = 0;
-	while (!s2[i++])
+	while (s2[i++])
 		n++;
 	return (n);
 }
 
-char		**ft_arrayjoin(const char **s1, const char **s2)
+char		**ft_arrayjoin(char **s1, char **s2)
 {
 	int		n;
 	int 	i;
