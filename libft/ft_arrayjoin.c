@@ -6,13 +6,13 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 19:39:42 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/11/26 13:01:33 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/11/26 19:11:56 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_count(char const **s1, char const **s2)
+static int	ft_count(const char **s1, const char **s2)
 {
 	int		n;
 	int		i;
@@ -29,7 +29,7 @@ static int	ft_count(char const **s1, char const **s2)
 	return (n);
 }
 
-char		**ft_arrayjoin(char const **s1, char const **s2)
+char		**ft_arrayjoin(const char **s1, const char **s2)
 {
 	int		n;
 	int 	i;
@@ -56,15 +56,4 @@ char		**ft_arrayjoin(char const **s1, char const **s2)
 		i++;
 	}
 	return (str);
-}
-
-#include <stdio.h>
-
-int		main (void)
-{
-	char *s1[3] = {"Hello", "World", "!"};
-	char *s2[2] = {"1", "2"};
-	char **s3;
-	s3 = ft_arrayjoin(s1, s2);
-	printf("%s\n", s3[3]);
 }

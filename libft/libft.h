@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 14:39:28 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/11/26 13:01:49 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/11/26 19:05:35 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int					ft_strnequ(char const *s1, char const *s2, size_t n);
 int					ft_strequ(char const *s1, char const *s2);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
-char				**ft_arrayjoin(char const **s1, char const **s2);
+char				**ft_arrayjoin(const char **s1, const char **s2);
 char				*ft_strtrim(char const *s);
 int					ft_isspace(int ch);
 char				**ft_strsplit(char const *s, char c);
