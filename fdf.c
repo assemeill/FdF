@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:30:21 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/11/27 19:53:31 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/11/28 22:04:51 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,50 @@ static int	ft_check(const int fd, char **map)
 		return (rows);
 }
 
-static	void ft_draw(char **values, int rows)
+static int		ft_to_int_array(char **map, int len)
 {
-		void	*mlx_ptr;
-		void	*win_ptr;
-		int n;
-		n = 0;
+	int		i;	
+	int		values[len + 1];	
+	
+	i = 0;	
+	while (map[len])
+	{
+		values[i] = ft_atoi(map[i]);
+		i++;
+	}
+	values[i] = '\0';
+	return(values);
+}
 
-		mlx_ptr = mlx_init();
-		win_ptr = mlx_new_window(mlx_ptr, 500, 500, "fdf");
-		while (n < 20)
-		{
-			mlx_pixel_put(mlx_ptr, win_ptr, 50 + n, 50, 250);
-			n++;
-		}
-		mlx_loop(mlx_ptr);
+static	void	ft_draw(char **map, int rows)
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	int		*values;
+	int		i;
+	int		n;
+
+	n = 0;
+	i = 0;
+	mlx_ptr = mlx_init();
+	win_ptr = mlx_new_window(mlx_ptr, 500, 500, "fdf");
+	while (map[n])
+		n++;
+	n /= rows;	
+	values = ft_int_array(map, len);
+	while (values[i])
+	{
+		if (values[i] - values[i + 1] == 0)
+			
+		else if (values[i] - values[i + 1] > 0)
+		else if (values[i] - values[i + 1] < 0)
+	}
+
+//	{
+//		mlx_pixel_put(mlx_ptr, win_ptr, 50 + n, 50, 250);
+//		n++;
+//	}
+//	mlx_loop(mlx_ptr);
 }
 
 int		main(int argc, char **argv)
