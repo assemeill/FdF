@@ -6,14 +6,46 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:30:21 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/11/28 22:04:51 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/11/30 22:42:27 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minilibx/mlx.h"
 #include "libft/libft.h"
 #include "get_next_line.h"
+#include <math.h>
 #include <stdio.h>
+
+static	void	ft_draw(int x0, int y0, int x1, int y1, void *mlx_ptr, void *win_ptr)
+{
+	int		deltax;
+	int		deltay;
+	int		deltaerr;
+	int		error;
+	int		y;
+	int		diry;
+	
+	deltax = ft_abs(x1 - x0);
+	deltay = ft_abs(y1 - y0);
+	deltaerr = deltay;
+	error = 0;
+	y = y0;
+	diry = y1 - y0;
+	if (diry > 0)
+		diry = 1;
+	else if (diry < 0)
+		diry = -1;
+	while (x0++ <= x1)
+	{
+		mlx_pixel_put(mlx_ptr, win_ptr, x0, y, 250);
+		error = error + deltaerr;
+		if (error >= 0.5)
+		{
+			y += diry;
+			error -= 1.0; 
+		}
+	}
+}
 
 static int	ft_check(const int fd, char **map)
 {
@@ -52,53 +84,69 @@ static int	ft_check(const int fd, char **map)
 		return (rows);
 }
 
-static int		ft_to_int_array(char **map, int len)
+static int		*ft_to_int_array(char **map, int len)
 {
 	int		i;	
-	int		values[len + 1];	
+	int		*values;
 	
-	i = 0;	
-	while (map[len])
+	i = 0;
+	len -= 1;
+	if (!(values = malloc((len + 1) * sizeof(*values))))
+		return (0);
+	while (map[i])
 	{
 		values[i] = ft_atoi(map[i]);
 		i++;
 	}
 	values[i] = '\0';
-	return(values);
+	return (values);
 }
 
-static	void	ft_draw(char **map, int rows)
+static	void	ft_manage_points(char **map, int rows)
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	int		*values;
+	int		x;
+	int		y;
 	int		i;
-	int		n;
+	int 	n;
+	int		zoom;
+	int		columns;
 
-	n = 0;
+	int pix = 10;
+
+	columns = 0;
 	i = 0;
+	n = 0;
+	zoom = 5;
+	x = 300;
+	y = 50;
 	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, 500, 500, "fdf");
-	while (map[n])
-		n++;
-	n /= rows;	
-	values = ft_int_array(map, len);
+	win_ptr = mlx_new_window(mlx_ptr, 1000, 1000, "fdf");
+//	mlx_string_put(mlx_ptr, win_ptr, 20, 60, 0xE0C3FC,"Controls:");
+//	while (pix++ < 1000)
+//		mlx_pixel_put(mlx_ptr, win_ptr, pix, pix, 0xAAAAAA);
+	while (map[columns])
+		columns++;
+	values = ft_to_int_array(map, columns + 1);
+	columns /= rows;	
 	while (values[i])
 	{
-		if (values[i] - values[i + 1] == 0)
-			
-		else if (values[i] - values[i + 1] > 0)
-		else if (values[i] - values[i + 1] < 0)
+		if (values[i + 1])
+			ft_draw(x * n, y + zoom * i * values[i], x * n, y + zoom * (i + 1) * values[i + 1], mlx_ptr, win_ptr);
+		if (values[i + rows])
+			ft_draw(x * n, y + zoom * i * values[i], x * (n + 1), y + zoom * (i + 1) * values[i + 1], mlx_ptr, win_ptr);
+		if (i == rows)
+			n++;
+		i++;
 	}
-
-//	{
-//		mlx_pixel_put(mlx_ptr, win_ptr, 50 + n, 50, 250);
-//		n++;
-//	}
-//	mlx_loop(mlx_ptr);
+//	while (1)
+//		;
+	mlx_loop(mlx_ptr);
 }
 
-int		main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	char	*map;
 	char	**values;
@@ -115,7 +163,7 @@ int		main(int argc, char **argv)
 			return (0);
 		}
 		values = ft_strsplit(map, ' ');
-		ft_draw(values, rows);
+		ft_manage_points(values, rows);
 
 	}
 	else
