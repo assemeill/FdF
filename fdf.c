@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:30:21 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/11/30 22:42:27 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/01 16:59:34 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ static	void	ft_manage_points(char **map, int rows)
 	int		y;
 	int		i;
 	int 	n;
+	int		o;
 	int		zoom;
 	int		columns;
 
@@ -119,27 +120,31 @@ static	void	ft_manage_points(char **map, int rows)
 	columns = 0;
 	i = 0;
 	n = 0;
-	zoom = 5;
-	x = 300;
-	y = 50;
+	o = 0;
+	zoom = 20;
+	x = 500;
+	y = 500;
 	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, 1000, 1000, "fdf");
+	win_ptr = mlx_new_window(mlx_ptr, 2000, 1000, "fdf");
 //	mlx_string_put(mlx_ptr, win_ptr, 20, 60, 0xE0C3FC,"Controls:");
 //	while (pix++ < 1000)
 //		mlx_pixel_put(mlx_ptr, win_ptr, pix, pix, 0xAAAAAA);
 	while (map[columns])
 		columns++;
 	values = ft_to_int_array(map, columns + 1);
-	columns /= rows;	
-	while (values[i])
+	while (map[o])
 	{
-		if (values[i + 1])
-			ft_draw(x * n, y + zoom * i * values[i], x * n, y + zoom * (i + 1) * values[i + 1], mlx_ptr, win_ptr);
-		if (values[i + rows])
-			ft_draw(x * n, y + zoom * i * values[i], x * (n + 1), y + zoom * (i + 1) * values[i + 1], mlx_ptr, win_ptr);
-		if (i == rows)
-			n++;
-		i++;
+		if (map[o + 1])
+			ft_draw(x + n * zoom, y - zoom * i + zoom * values[o], x + (n + 1) * zoom, y - zoom * i + zoom * values[o + 1], mlx_ptr, win_ptr);
+		if (map[o + rows])
+			ft_draw(x + n * zoom, y - zoom * i + zoom * values[o], x + n * zoom, y - zoom * (i + 1) + values[o + rows] * zoom, mlx_ptr, win_ptr);
+		n++;
+		if (n == rows)
+		{
+			n = 0;
+			i++;
+		}
+		o++;
 	}
 //	while (1)
 //		;
