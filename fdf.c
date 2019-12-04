@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 14:30:21 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/01 16:59:34 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/03 18:42:26 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,83 @@
 #include <math.h>
 #include <stdio.h>
 
-static	void	ft_draw(int x0, int y0, int x1, int y1, void *mlx_ptr, void *win_ptr)
+static	void	ft_plot_line_low(int x0, int y0, int x1, int y1, void *mlx_ptr, void *win_ptr)
 {
-	int		deltax;
-	int		deltay;
-	int		deltaerr;
-	int		error;
+	int		dx;
+	int		dy;
+	int		yi;
 	int		y;
-	int		diry;
-	
-	deltax = ft_abs(x1 - x0);
-	deltay = ft_abs(y1 - y0);
-	deltaerr = deltay;
-	error = 0;
+	int		error;
+
+	yi = 1;
+	dx = x1 - x0;
+	dy = y1 - y0;
+	if (dy < 0)
+	{
+		yi = -1;
+		dy = -dy;
+	}
+	error = 2*dy - dx;
 	y = y0;
-	diry = y1 - y0;
-	if (diry > 0)
-		diry = 1;
-	else if (diry < 0)
-		diry = -1;
-	while (x0++ <= x1)
+	while (x0++ < x1)
 	{
 		mlx_pixel_put(mlx_ptr, win_ptr, x0, y, 250);
-		error = error + deltaerr;
-		if (error >= 0.5)
+		if (error > 0)
 		{
-			y += diry;
-			error -= 1.0; 
+			y = y + yi;
+			error = error - 2*dx;
 		}
+		error = error + 2*dy;
+	}
+
+}
+
+static	void	ft_plot_line_high(int x0, int y0, int x1, int y1, void *mlx_ptr, void *win_ptr)
+{
+	int		dx;
+	int		dy;
+	int		xi;
+	int		x;
+	int		error;
+
+	xi = 1;
+	dx = x1 - x0;
+	dy = y1 - y0;
+	if (dx < 0)
+	{
+		xi = -1;
+		dx = -dx;
+	}
+	error = 2*dx - dy;
+	x = x0;
+	while (y0++ < y1)
+	{
+		mlx_pixel_put(mlx_ptr, win_ptr, x, y0, 250);
+		if (error > 0)
+		{
+			x = x + xi;
+			error = error - 2*dy;
+		}
+		error = error + 2*dx;
+	}
+
+}
+
+static	void	ft_draw(int x0, int y0, int x1, int y1, void *mlx_ptr, void *win_ptr)
+{
+	if (ft_abs(y1 - y0) < ft_abs(x1 - x0))
+	{
+		if (x0 > x1)
+			ft_plot_line_low(x1, y1, x0, y0, mlx_ptr, win_ptr);
+		else
+			ft_plot_line_low(x0, y0, x1, y1, mlx_ptr, win_ptr);
+	}
+	else
+	{
+		if (y0 > y1)
+			ft_plot_line_high(x1, y1, x0, y0, mlx_ptr, win_ptr);
+		else
+			ft_plot_line_high(x0, y0, x1, y1, mlx_ptr, win_ptr);
 	}
 }
 
@@ -134,10 +183,10 @@ static	void	ft_manage_points(char **map, int rows)
 	values = ft_to_int_array(map, columns + 1);
 	while (map[o])
 	{
-		if (map[o + 1])
-			ft_draw(x + n * zoom, y - zoom * i + zoom * values[o], x + (n + 1) * zoom, y - zoom * i + zoom * values[o + 1], mlx_ptr, win_ptr);
+		if (map[o + 1] && n + 1 < rows)
+			ft_draw(x + n * zoom, y + zoom * i + zoom * values[o], x + (n + 1) * zoom, y + zoom * i + zoom * values[o + 1], mlx_ptr, win_ptr);
 		if (map[o + rows])
-			ft_draw(x + n * zoom, y - zoom * i + zoom * values[o], x + n * zoom, y - zoom * (i + 1) + values[o + rows] * zoom, mlx_ptr, win_ptr);
+			ft_draw(x + n * zoom, y + zoom * i + zoom * values[o], x + n * zoom, y + zoom * (i + 1) + values[o + rows] * zoom, mlx_ptr, win_ptr);
 		n++;
 		if (n == rows)
 		{
