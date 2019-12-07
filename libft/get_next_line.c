@@ -6,11 +6,11 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 18:46:25 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/11/02 14:39:11 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/06 14:03:24 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "libft.h"
 #include "get_next_line.h"
 
 static void		ft_write(char **tmp, char **left, char **line)
