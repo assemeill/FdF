@@ -12,11 +12,12 @@
 
 #include "fdf.h"
 
-void	manage_keys(void *mlx_ptr, void *win_ptr)
+void	manage_keys(t_coord *t)
 {
-	mlx_hook(win_ptr, 2, 0,key_press, mlx_ptr);
-	mlx_hook(win_ptr, 17, 0, close, mlx_ptr);
+	mlx_hook(t->win_ptr, 2, 0,key_press, t->mlx_ptr);
+	mlx_hook(t->win_ptr, 17, 0, close, t->mlx_ptr);
 }
+
 
 int		key_press(int keycode, void *param)
 {

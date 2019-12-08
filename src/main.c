@@ -14,22 +14,20 @@
 
 int				main(int argc, char **argv)
 {
-	char	*map;
+	t_coord	*t;
 	char	**values;
-	int		rows;
-	int		fd;
 
-		
+	t = (t_coord *)malloc(sizeof(t_coord));	
 	if (argc == 2)
 	{
-		fd = open(argv[1], O_RDONLY);
-		if (!(rows = ft_check(fd, &map)))
+		t->fd = open(argv[1], O_RDONLY);
+		if (!ft_check(t))
 		{
 			ft_putstr("Invalid file\n");
 			return (0);
 		}
-		values = ft_strsplit(map, ' ');
-		ft_manage_points(values, rows);
+		values = ft_strsplit(t->map, ' ');
+		ft_manage_points(t);
 
 	}
 	else

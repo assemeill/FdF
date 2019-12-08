@@ -12,106 +12,91 @@
 
 #include "fdf.h"
 
-int	ft_check(const int fd, char **map)
+int	ft_check(t_coord *t)
 {
 	char	**check;
 	char	*tmp[2];
 	char	*blank;
 	char	*line;
-	int		rows;
 	int		i;
 
-	rows = 0;
+	t->rows = 0;
 	i = 0;
-	*map = NULL;
+	t->map = NULL;
 	blank = " ";
-	while (get_next_line(fd, &line) != 0)
+	while (get_next_line(t->fd, &line) != 0)
 	{	
-		tmp[0] = *map;
-		tmp[1] = ft_strjoin(*map, line);
-		*map = ft_strjoin(tmp[1], blank);
+		tmp[0] = t->map;
+		tmp[1] = ft_strjoin(t->map, line);
+		t->map = ft_strjoin(tmp[1], blank);
 		ft_strdel(&tmp[0]);
 		ft_strdel(&tmp[1]);
 		check = ft_strsplit(line, ' ');
 		ft_strdel(&line);
 		while (check[i])
 			i++;
-		if (rows == 0)
-			rows = i;
-		else if (rows != i)
+		if (t->rows == 0)
+			t->rows = i;
+		else if (t->rows != i)
 			return (0);
 		ft_strdel(check);
 		i = 0;
 	}
-	if (rows == 0)
+	if (t->rows == 0)
 		return (0);
 	else
-		return (rows);
+		return (t->rows);
 }
 
-int		*ft_to_int_array(char **map, int len)
+void		*ft_to_int_array(t_coord *t)
 {
 	int		i;	
-	int		*values;
 	
 	i = 0;
-	len -= 1;
-	if (!(values = malloc((len + 1) * sizeof(*values))))
+	if (!(t->values = malloc((t->columns + 1) * sizeof(t->values))))
 		return (0);
-	while (map[i])
+	while (t->map[i])
 	{
-		values[i] = ft_atoi(map[i]);
+		t->values[i] = ft_atoi(&(t->map[i]));
 		i++;
 	}
-	values[i] = '\0';
-	return (values);
+	t->values[i] = '\0';
+	return (0);
 }
 
-void	ft_manage_points(char **map, int rows)
+void	ft_manage_points(t_coord *t)
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	int		*values;
-	int		x;
-	int		y;
 	int		i;
 	int 	n;
 	int		o;
-	int		zoom;
-	int		columns;
 
 
-	columns = 0;
+	t->columns = 0;
 	i = 0;
 	n = 0;
 	o = 0;
-	zoom = 20;
-	x = 500;
-	y = 500;
-	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, 2000, 1000, "fdf");
-//	mlx_string_put(mlx_ptr, win_ptr, 20, 60, 0xE0C3FC,"Controls:");
-//	while (pix++ < 1000)
-//		mlx_pixel_put(mlx_ptr, win_ptr, pix, pix, 0xAAAAAA);
-	while (map[columns])
-		columns++;
-	values = ft_to_int_array(map, columns + 1);
-	while (map[o])
+	t->zoom = 20;
+	t->x = 500;
+	t->y = 500;
+	t->mlx_ptr = mlx_init();
+	t->win_ptr = mlx_new_window(t->mlx_ptr, 2000, 1000, "fdf");
+	while (t->map[t->columns])
+		t->columns++;
+	ft_to_int_array(t);
+	while (t->map[o])
 	{
-		if (map[o + 1] && n + 1 < rows)
-			ft_draw(x + n * zoom, y + zoom * i + zoom * values[o], x + (n + 1) * zoom, y + zoom * i + zoom * values[o + 1], mlx_ptr, win_ptr);
-		if (map[o + rows])
-			ft_draw(x + n * zoom, y + zoom * i + zoom * values[o], x + n * zoom, y + zoom * (i + 1) + values[o + rows] * zoom, mlx_ptr, win_ptr);
+		if (t->map[o + 1] && n + 1 < t->rows)
+			ft_draw(t->x + n * t->zoom, t->y + t->zoom * i + t->zoom * t->values[o], t->x + (n + 1) * t->zoom, t->y + t->zoom * i + t->zoom * t->values[o + 1], t);
+		if (t->map[o + t->rows])
+			ft_draw(t->x + n * t->zoom, t->y + t->zoom * i + t->zoom * t->values[o], t->x + n * t->zoom, t->y + t->zoom * (i + 1) + t->values[o + t->rows] * t->zoom, t);
 		n++;
-		if (n == rows)
+		if (n == t->rows)
 		{
 			n = 0;
 			i++;
 		}
 		o++;
 	}
-	manage_keys(mlx_ptr, win_ptr);
-	mlx_loop(mlx_ptr);
+	manage_keys(t);
+	mlx_loop(t->mlx_ptr);
 }
-
-
