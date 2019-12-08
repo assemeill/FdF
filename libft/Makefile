@@ -6,7 +6,7 @@
 #    By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/19 11:52:01 by aszhilki          #+#    #+#              #
-#    Updated: 2019/12/06 15:34:37 by aszhilki         ###   ########.fr        #
+#    Updated: 2019/12/07 22:26:14 by aszhilki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,16 +25,16 @@ FLAGS = -Wall -Werror -Wextra
 all: $(NAME)
 
 $(NAME): $(FILE_O)
-	ar rc $(NAME) $(FILE_O)
-	ranlib $(NAME)
+	@ar rc $(NAME) $(FILE_O)
+	@ranlib $(NAME)
 
 $(FILE_O):
-	gcc -c $(FILE) -I $(FILE_H) $(FLAGS)
+	@gcc -c $(FILE) -I $(FILE_H) $(FLAGS)
 
 clean:
-	rm -f $(FILE_O)
+	@rm -f $(FILE_O)
 
 fclean:	clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re:	fclean all

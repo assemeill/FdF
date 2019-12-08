@@ -6,7 +6,7 @@
 #    By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/06 13:54:08 by aszhilki          #+#    #+#              #
-#    Updated: 2019/12/06 19:19:36 by aszhilki         ###   ########.fr        #
+#    Updated: 2019/12/07 22:57:38 by aszhilki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,20 +29,23 @@ LFT_LNK = -L ./libft -lft
 all: $(NAME)
 
 $(LFT_LIB):
-	make -C $(LFT_PATH)
+	@echo "(-᷅_-᷄๑) in process\n"
+	@make -C $(LFT_PATH)
 
 $(MLX_LIB):
-	make -C $(MLX_PATH)
+	@make -C $(MLX_PATH)
 
 $(NAME): $(LFT_LIB) $(MLX_LIB)
-	gcc -o $(NAME) $(SRC) $(LFT_LNK) $(MLX_LNK) $(FLAGS)
+	@gcc -o $(NAME) $(SRC) $(LFT_LNK) $(MLX_LNK) $(FLAGS)
+	@echo "success (•̀ᴗ•́)و ̑̑"
 
 clean:
-	make -C $(LFT_PATH) clean
-	make -C $(MLX_PATH) clean
+	@make -C $(LFT_PATH) clean
+	@make -C $(MLX_PATH) clean
 
 fclean: clean
-	rm -f $(NAME)
-	make -C $(LFT_PATH) fclean
+	@rm -f $(NAME)
+	@make -C $(LFT_PATH) fclean
+	@echo "all clean! ɿ(｡･ɜ･)ɾ"
 
 re: fclean all

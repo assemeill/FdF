@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 17:53:59 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/06 18:31:11 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/07 22:11:44 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int				main(int argc, char **argv)
 {
 	t_coord	*t;
-	char	**values;
 
 	t = (t_coord *)malloc(sizeof(t_coord));	
 	if (argc == 2)
@@ -26,9 +25,8 @@ int				main(int argc, char **argv)
 			ft_putstr("Invalid file\n");
 			return (0);
 		}
-		values = ft_strsplit(t->map, ' ');
-		ft_manage_points(t);
-
+		t->list = ft_strsplit(t->map, ' ');
+		ft_create_scene(t);
 	}
 	else
 		ft_putstr("Usage : ./fdf <filename> [ case_size z_size ]\n");

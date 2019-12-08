@@ -6,13 +6,13 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 18:28:57 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/06 19:08:37 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/07 22:19:32 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	ft_check(t_coord *t)
+int		ft_check(t_coord *t)
 {
 	char	**check;
 	char	*tmp[2];
@@ -48,19 +48,18 @@ int	ft_check(t_coord *t)
 		return (t->rows);
 }
 
-void		*ft_to_int_array(t_coord *t)
+void	*ft_to_int_array(t_coord *t)
 {
 	int		i;	
 	
 	i = 0;
 	if (!(t->values = malloc((t->columns + 1) * sizeof(t->values))))
 		return (0);
-	while (t->map[i])
+	while (t->list[i])
 	{
-		t->values[i] = ft_atoi(&(t->map[i]));
+		t->values[i] = ft_atoi(t->list[i]);
 		i++;
 	}
-	t->values[i] = '\0';
 	return (0);
 }
 
@@ -70,24 +69,15 @@ void	ft_manage_points(t_coord *t)
 	int 	n;
 	int		o;
 
-
-	t->columns = 0;
 	i = 0;
 	n = 0;
 	o = 0;
-	t->zoom = 20;
-	t->x = 500;
-	t->y = 500;
-	t->mlx_ptr = mlx_init();
-	t->win_ptr = mlx_new_window(t->mlx_ptr, 2000, 1000, "fdf");
-	while (t->map[t->columns])
-		t->columns++;
-	ft_to_int_array(t);
-	while (t->map[o])
+	mlx_clear_window(t->mlx_ptr, t->win_ptr);
+	while (t->list[o])
 	{
-		if (t->map[o + 1] && n + 1 < t->rows)
+		if (t->list[o + 1] && n + 1 < t->rows)
 			ft_draw(t->x + n * t->zoom, t->y + t->zoom * i + t->zoom * t->values[o], t->x + (n + 1) * t->zoom, t->y + t->zoom * i + t->zoom * t->values[o + 1], t);
-		if (t->map[o + t->rows])
+		if (t->list[o + t->rows])
 			ft_draw(t->x + n * t->zoom, t->y + t->zoom * i + t->zoom * t->values[o], t->x + n * t->zoom, t->y + t->zoom * (i + 1) + t->values[o + t->rows] * t->zoom, t);
 		n++;
 		if (n == t->rows)
@@ -97,6 +87,20 @@ void	ft_manage_points(t_coord *t)
 		}
 		o++;
 	}
+}
+
+void	ft_create_scene(t_coord *t)
+{
+	t->columns = 0;
+	t->zoom = 20;
+	t->x = 200;
+	t->y = 200;
+	t->mlx_ptr = mlx_init();
+	t->win_ptr = mlx_new_window(t->mlx_ptr, 2000, 1000, "fdf");
+	while (t->map[t->columns])
+		t->columns++;
+	ft_to_int_array(t);
+	ft_manage_points(t);
 	manage_keys(t);
 	mlx_loop(t->mlx_ptr);
 }
