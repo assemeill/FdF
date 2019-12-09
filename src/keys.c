@@ -20,9 +20,9 @@ void	manage_keys(t_coord *t)
 
 void	key_zoom(int keycode, t_coord *t)
 {
-	if (keycode == 69 && t->zoom <= 200)
+	if ((keycode == 69 || keycode == 24) && t->zoom <= 200)
 		t->zoom+=1;
-	else if (keycode == 78 && t->zoom >= 15)
+	else if ((keycode == 78 || keycode == 27) && t->zoom >= 15)
 		t->zoom-=1;
 	ft_manage_points(t);
 }
@@ -30,9 +30,9 @@ void	key_zoom(int keycode, t_coord *t)
 void	key_move(int keycode, t_coord *t)
 {
 	if (keycode == 123 && t->x >= 0)
-		t->x-=1;
+		t->x-=3;
 	else if (keycode == 124 && t->x <= 1000)
-		t->x+=1;
+		t->x+=3;
 	else if (keycode == 126 && t->y >= 0)
 		t->y+=3;
 	else if (keycode == 125 && t->y <= 1000)
@@ -41,7 +41,7 @@ void	key_move(int keycode, t_coord *t)
 
 int		key_press(int keycode, t_coord *t)
 {
-	if (keycode == 69 || keycode == 78)
+	if (keycode == 69 || keycode == 78 || keycode == 24 || keycode == 27)
 		key_zoom(keycode, t);
 	if (keycode == 53)
 		ft_close(t->win_ptr);
