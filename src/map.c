@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 18:28:57 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/07 22:19:32 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/10 14:16:09 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,18 @@ void	*ft_to_int_array(t_coord *t)
 	return (0);
 }
 
+//void	ft_iso(int x, int y, int z)
+//{
+//	int		o;
+//	int		previous_x;
+//	int		previous_y;
+//
+//	previous_x = t->x;
+//	previous_y = t->y;
+//	t->x = (previous_x - previous_y) * cos(0.523599);
+//	t->y = -(t->z) + (previous_x + previous_y) * sin (0.523599);
+//}
+
 void	ft_manage_points(t_coord *t)
 {
 	int		i;
@@ -75,10 +87,17 @@ void	ft_manage_points(t_coord *t)
 	mlx_clear_window(t->mlx_ptr, t->win_ptr);
 	while (t->list[o])
 	{
+		t->z = t->values[o];
 		if (t->list[o + 1] && n + 1 < t->rows)
-			ft_draw(t->x + n * t->zoom, t->y + t->zoom * i + t->zoom * t->values[o], t->x + (n + 1) * t->zoom, t->y + t->zoom * i + t->zoom * t->values[o + 1], t);
-		if (t->list[o + t->rows])
-			ft_draw(t->x + n * t->zoom, t->y + t->zoom * i + t->zoom * t->values[o], t->x + n * t->zoom, t->y + t->zoom * (i + 1) + t->values[o + t->rows] * t->zoom, t);
+		{
+			ft_iso(t->xp + n * t->zoom, t->yp + t->zoom * i - t->zoom * t->values[o], values[o]);
+			ft_iso(t->xp + (n + 1) * t->zoom, t->yp + t->zoom * i - t->zoom * t->values[o + 1], values[o + 1]);
+		}
+		if (t->list[o + t->rows] && o + t->rows < t -> columns)
+		{
+			ft_iso(t->xp + n * t->zoom, t->yp + t->zoom * i - t->zoom * t->values[o], values[o]);
+			ft_iso(t->xp + n * t->zoom, t->yp + t->zoom * (i + 1) - t->values[o + t->rows] * t->zoom, values[o + t->rows]);
+		}
 		n++;
 		if (n == t->rows)
 		{
@@ -93,8 +112,10 @@ void	ft_create_scene(t_coord *t)
 {
 	t->columns = 0;
 	t->zoom = 20;
-	t->x = 200;
-	t->y = 200;
+	t->xp = 200;
+	t->yp = 200;
+	t->x = 0;
+	t->y = 0;
 	t->mlx_ptr = mlx_init();
 	t->win_ptr = mlx_new_window(t->mlx_ptr, 2000, 1000, "fdf");
 	while (t->map[t->columns])

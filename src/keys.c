@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 18:41:13 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/07 22:36:00 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/10 13:36:12 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,32 @@
 
 void	manage_keys(t_coord *t)
 {
-	mlx_hook(t->win_ptr, 2, 0,key_press, t);
+	mlx_hook(t->win_ptr, 2, 0, key_press, t);
+//	mlx_hook(t->win_ptr, 4, 0, mouse_press, t);
+//	mlx_hook(t->win_ptr, 5, 0, mouse_release, t);
+	mlx_hook(t->win_ptr, 6, 0, mouse_move, t);
 	mlx_hook(t->win_ptr, 17, 0, ft_close, t);
 }
+
+int		mouse_move(int x, int y, t_coord *t)
+{
+	mlx_string_put(t->mlx_ptr, t->win_ptr, 5, 5, 250, "HEY");
+	x+=y;
+	return (0);
+}
+
+//int		mouse_press(t_coord *t)
+//{	
+//	t->check = 1;	
+//	return (0);
+//}
+
+//int		mouse_release(t_coord *t)
+//{	
+//	t->check = 0;	
+//	return (0);
+//}
+
 
 void	key_zoom(int keycode, t_coord *t)
 {
@@ -30,13 +53,13 @@ void	key_zoom(int keycode, t_coord *t)
 void	key_move(int keycode, t_coord *t)
 {
 	if (keycode == 123 && t->x >= 0)
-		t->x-=3;
+		t->xp-=3;
 	else if (keycode == 124 && t->x <= 1000)
-		t->x+=3;
+		t->xp+=3;
 	else if (keycode == 126 && t->y >= 0)
-		t->y+=3;
+		t->yp+=3;
 	else if (keycode == 125 && t->y <= 1000)
-		t->y+=3;
+		t->yp+=3;
 }
 
 int		key_press(int keycode, t_coord *t)
