@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 17:56:41 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/10 13:31:21 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/11 17:36:59 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ typedef	struct	s_coord
 	char	*map;
 	char	**list;
 	int		rows;
-	int		z;
-	int		x;
+	int		*z;
+	int		*x;
 	int		xp;
-	int		y;
+	int		*y;
 	int		yp;
 	int		zoom;
 	int		columns;
@@ -49,5 +49,7 @@ void	manage_keys(t_coord *t);
 //int		mouse_press(t_coord *t);
 //int		mouse_release(t_coord *t);
 int		mouse_move(int x, int y, t_coord *t);
+void	ft_set_points(t_coord *t);
+void	ft_iso(int *x, int *y, int *z);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 18:41:13 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/10 13:36:12 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:03:18 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	key_zoom(int keycode, t_coord *t)
 
 void	key_move(int keycode, t_coord *t)
 {
-	if (keycode == 123 && t->x >= 0)
+	if (keycode == 123) //&& t->xp >= 0)
 		t->xp-=3;
-	else if (keycode == 124 && t->x <= 1000)
+	else if (keycode == 124)// && t->xp <= 1000)
 		t->xp+=3;
-	else if (keycode == 126 && t->y >= 0)
+	else if (keycode == 126)// && t->yp >= 0)
 		t->yp+=3;
-	else if (keycode == 125 && t->y <= 1000)
-		t->yp+=3;
+	else if (keycode == 125)// && t->yp <= 1000)
+		t->yp-=3;
 }
 
 int		key_press(int keycode, t_coord *t)
