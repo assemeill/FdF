@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 18:28:57 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/11 18:07:34 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/13 13:40:54 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ void	*ft_to_int_array(t_coord *t)
 	i = 0;
 	if (!(t->values = malloc((t->columns + 1) * sizeof(t->values))))
 		return (0);
+	t->xiso = malloc((t->columns + 1) * sizeof(t->values));
+	t->yiso = malloc((t->columns + 1) * sizeof(t->values));
+	t->ziso = malloc((t->columns + 1) * sizeof(t->values));
 	t->x = malloc((t->columns + 1) * sizeof(t->values));
 	t->y = malloc((t->columns + 1) * sizeof(t->values));
 	t->z = malloc((t->columns + 1) * sizeof(t->values));
@@ -66,15 +69,15 @@ void	*ft_to_int_array(t_coord *t)
 	return (0);
 }
 
-void	ft_iso(int *x, int *y, int *z)
+void	ft_iso(t_coord *t, int o)
 {
 	int		previous_x;
 	int		previous_y;
 
-	previous_x = *x;
-	previous_y = *y;
-	*x = (previous_x - previous_y) * cos(0.523599);
-	*y = (previous_x + previous_y) * sin(0.523599) - *z;
+	previous_x = t->x[o];
+	previous_y = t->y[o];
+	t->xiso[o] = (previous_x - previous_y) * cos(0.523599);
+	t->yiso[o] = (previous_x + previous_y) * sin(0.523599) - t->z[o];
 }
 
 void	ft_set_points(t_coord *t)
@@ -123,15 +126,14 @@ void	ft_manage_points(t_coord *t)
 	{
 		if (t->list[o + 1] && n + 1 < t->rows)
 		{
-//			ft_iso(&(t->x[o]), &(t->y[o]), &(t->z[o]));
-//			ft_iso(&(t->x[o + 1]), &(t->y[o + 1]), &(t->z[o + 1]));
-			ft_draw(t->x[o], t->y[o], t->x[o + 1], t->y[o + 1], t);
+			ft_iso(t, o);
+			ft_iso(t, o + 1);
+			ft_draw(t->xiso[o], t->yiso[o], t->xiso[o + 1], t->yiso[o + 1], t);
 		}
 		if (t->list[o + t->rows] && o + t->rows < t->columns)
 		{
-//			ft_iso(&(t->x[o]), &(t->y[o]), &(t->z[o]));
-//			ft_iso(&(t->x[o + t->rows]), &(t->y[o + t->rows]), &(t->z[o + t->rows]));
-			ft_draw(t->x[o], t->y[o], t->x[o + t->rows], t->y[o + t->rows], t);
+			ft_iso(t, o + t->rows);
+			ft_draw(t->xiso[o], t->yiso[o], t->xiso[o + t->rows], t->yiso[o + t->rows], t);
 		}
 		n++;
 		if (n == t->rows)
@@ -147,8 +149,8 @@ void	ft_create_scene(t_coord *t)
 {
 	t->columns = 0;
 	t->zoom = 20;
-	t->xp = 200;
-	t->yp = 200;
+	t->xp = 500;
+	t->yp = 500;
 	t->mlx_ptr = mlx_init();
 	t->win_ptr = mlx_new_window(t->mlx_ptr, 2000, 1000, "fdf");
 	while (t->map[t->columns])
