@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 17:53:59 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/14 17:26:02 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/14 21:08:45 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		t->fd = open(argv[1], O_RDONLY);
-		if (!ft_check(t))
+		if (ft_check(t) == 0)
 		{
 			ft_putstr("Invalid file\n");
 			return (0);

@@ -6,86 +6,142 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 17:57:30 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/14 18:59:41 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/14 23:09:26 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static	void	ft_plot_line_low(int x0, int y0, int x1, int y1, t_coord *t)
+static	void	ft_line_low(int *x0, int *y0, int o, t_coord *t)
 {
-	int		dx;
 	int		dy;
-	int		yi;
+	int		yi[2];
 	int		y;
-	int		error;
+	int		x;
 
-	yi = 1;
-	dx = x1 - x0;
-	dy = y1 - y0;
+	yi[0] = 1;
+	dy = y0[t->i + o] - y0[t->i];
 	if (dy < 0)
 	{
-		yi = -1;
+		yi[0] = -1;
 		dy = -dy;
 	}
-	error = 2 * dy - dx;
-	y = y0;
-	while (x0++ < x1)
+	yi[1] = 2 * dy - (x0[t->i + o] - x0[t->i]);
+	y = y0[t->i];
+	x = x0[t->i];
+	while (x++ < x0[t->i + o])
 	{
-		mlx_pixel_put(t->mlx_ptr, t->win_ptr, x0, y, 250);
-		if (error > 0)
+		mlx_pixel_put(t->mlx_ptr, t->win_ptr, x, y, 0xff4500);
+		if (yi[1] > 0)
 		{
-			y = y + yi;
-			error = error - 2 * dx;
+			y = y + yi[0];
+			yi[1] = yi[1] - 2 * (x0[t->i + o] - x0[t->i]);
 		}
-		error = error + 2 * dy;
+		yi[1] = yi[1] + 2 * dy;
 	}
 }
 
-static	void	ft_plot_line_high(int x0, int y0, int x1, int y1, t_coord *t)
+static	void	ft_line_lower(int *x0, int *y0, int o, t_coord *t)
+{
+	int		dy;
+	int		yi[2];
+	int		y;
+	int		x;
+
+	yi[0] = 1;
+	dy = y0[t->i] - y0[t->i + o];
+	if (dy < 0)
+	{
+		yi[0] = -1;
+		dy = -dy;
+	}
+	yi[1] = 2 * dy - (x0[t->i] - x0[t->i + o]);
+	y = y0[t->i + o];
+	x = x0[t->i + o];
+	while (x++ < x0[t->i])
+	{
+		mlx_pixel_put(t->mlx_ptr, t->win_ptr, x, y, 0xff4500);
+		if (yi[1] > 0)
+		{
+			y = y + yi[0];
+			yi[1] = yi[1] - 2 * (x0[t->i] - x0[t->i + o]);
+		}
+		yi[1] = yi[1] + 2 * dy;
+	}
+}
+
+static	void	ft_line_high(int *x0, int *y0, int o, t_coord *t)
 {
 	int		dx;
-	int		dy;
-	int		xi;
+	int		xi[2];
 	int		x;
-	int		error;
+	int		y;
 
-	xi = 1;
-	dx = x1 - x0;
-	dy = y1 - y0;
+	xi[0] = 1;
+	dx = x0[t->i + o] - x0[t->i];
 	if (dx < 0)
 	{
-		xi = -1;
+		xi[0] = -1;
 		dx = -dx;
 	}
-	error = 2 * dx - dy;
-	x = x0;
-	while (y0++ < y1)
+	xi[1] = 2 * dx - (y0[t->i + o] - y0[t->i]);
+	x = x0[t->i];
+	y = y0[t->i];
+	while (y++ < y0[t->i + o])
 	{
-		mlx_pixel_put(t->mlx_ptr, t->win_ptr, x, y0, 250);
-		if (error > 0)
+		mlx_pixel_put(t->mlx_ptr, t->win_ptr, x, y, 0xff4500);
+		if (xi[1] > 0)
 		{
-			x = x + xi;
-			error = error - 2 * dy;
+			x = x + xi[0];
+			xi[1] = xi[1] - 2 * (y0[t->i + o] - y0[t->i]);
 		}
-		error = error + 2 * dx;
+		xi[1] = xi[1] + 2 * dx;
 	}
 }
 
-void			ft_draw(int x0, int y0, int x1, int y1, t_coord *t)
+static	void	ft_line_higher(int *x0, int *y0, int o, t_coord *t)
 {
-	if (ft_abs(y1 - y0) < ft_abs(x1 - x0))
+	int		dx;
+	int		xi[2];
+	int		x;
+	int		y;
+
+	xi[0] = 1;
+	dx = x0[t->i] - x0[t->i + o];
+	if (dx < 0)
 	{
-		if (x0 > x1)
-			ft_plot_line_low(x1, y1, x0, y0, t);
+		xi[0] = -1;
+		dx = -dx;
+	}
+	xi[1] = 2 * dx - (y0[t->i] - y0[t->i + o]);
+	x = x0[t->i + o];
+	y = y0[t->i + o];
+	while (y++ < y0[t->i])
+	{
+		mlx_pixel_put(t->mlx_ptr, t->win_ptr, x, y, 0xff4500);
+		if (xi[1] > 0)
+		{
+			x = x + xi[0];
+			xi[1] = xi[1] - 2 * (y0[t->i] - y0[t->i + o]);
+		}
+		xi[1] = xi[1] + 2 * dx;
+	}
+}
+
+void			ft_draw(int *x0, int *y0, int o, t_coord *t)
+{
+	if (ft_abs(y0[t->i + o] - y0[t->i]) < ft_abs(x0[t->i + o] - x0[t->i]))
+	{
+		if (x0[t->i] > x0[t->i + o])
+			ft_line_lower(x0, y0, o, t);
 		else
-			ft_plot_line_low(x0, y0, x1, y1, t);
+			ft_line_low(x0, y0, o, t);
 	}
 	else
 	{
-		if (y0 > y1)
-			ft_plot_line_high(x1, y1, x0, y0, t);
+		if (y0[t->i] > y0[t->i + o])
+			ft_line_higher(x0, y0, o, t);
 		else
-			ft_plot_line_high(x0, y0, x1, y1, t);
+			ft_line_high(x0, y0, o, t);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 15:23:37 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/14 18:57:51 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/14 22:49:17 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,25 +61,25 @@ void	ft_set_points(t_coord *t)
 void	ft_projection(int *x, int *y, t_coord *t)
 {
 	int		n;
-	int		o;
 
 	n = 0;
-	o = 0;
-	while (t->list[o])
+	t->i = 0;
+	while (t->list[t->i])
 	{
-		if (t->list[o + 1] && n++ + 1 < t->rows)
-			ft_draw(x[o], y[o], x[o + 1], y[o + 1], t);
-		if (t->list[o + t->rows] && o + t->rows < t->columns)
-			ft_draw(x[o], y[o], x[o + t->rows], y[o + t->rows], t);
+		if (t->list[t->i + 1] && n++ + 1 < t->rows)
+			ft_draw(x, y, 1, t);
+		if (t->list[t->i + t->rows] && t->i + t->rows < t->columns)
+			ft_draw(x, y, t->rows, t);
 		if (n == t->rows)
 			n = 0;
-		o++;
+		t->i += 1;
 	}
 }
 
 void	ft_manage_points(t_coord *t)
 {
 	mlx_clear_window(t->mlx_ptr, t->win_ptr);
+	ft_panel(t);
 	ft_set_points(t);
 	ft_iso(t);
 	if (t->projection == 1)

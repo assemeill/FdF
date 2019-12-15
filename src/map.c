@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 18:28:57 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/14 18:32:41 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/14 21:14:53 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int		ft_check(t_coord *t)
 {
 	t->rows = 0;
 	t->map = NULL;
-	ft_copy(t);
-	if (ft_copy(t) > 0)
+	if (ft_copy(t) != 0)
 		return (t->rows);
 	else
 		return (0);
@@ -43,7 +42,7 @@ int		ft_copy(t_coord *t)
 			i++;
 		if (t->rows == 0)
 			t->rows = i;
-		else if (t->rows != i)
+		else if (t->rows != i && t->rows != 0)
 			return (0);
 		ft_strdel(check);
 		i = 0;
