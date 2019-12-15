@@ -6,7 +6,7 @@
 #    By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/06 13:54:08 by aszhilki          #+#    #+#              #
-#    Updated: 2019/12/07 22:57:38 by aszhilki         ###   ########.fr        #
+#    Updated: 2019/12/14 15:35:43 by aszhilki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = fdf
 
 FLAGS = -Wall -Werror -Wextra -g
 
-SRC_NAME = main.c map.c keys.c draw.c
+SRC_NAME = main.c map.c keys.c draw.c points.c
 SRC_PATH = ./src/
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 

@@ -6,17 +6,17 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 17:53:59 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/07 22:11:44 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/14 17:26:02 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int				main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_coord	*t;
 
-	t = (t_coord *)malloc(sizeof(t_coord));	
+	t = (t_coord *)malloc(sizeof(t_coord));
 	if (argc == 2)
 	{
 		t->fd = open(argv[1], O_RDONLY);

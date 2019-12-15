@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 17:57:30 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/06 17:59:15 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/14 18:59:41 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static	void	ft_plot_line_low(int x0, int y0, int x1, int y1, t_coord *t)
 		yi = -1;
 		dy = -dy;
 	}
-	error = 2*dy - dx;
+	error = 2 * dy - dx;
 	y = y0;
 	while (x0++ < x1)
 	{
@@ -36,11 +36,10 @@ static	void	ft_plot_line_low(int x0, int y0, int x1, int y1, t_coord *t)
 		if (error > 0)
 		{
 			y = y + yi;
-			error = error - 2*dx;
+			error = error - 2 * dx;
 		}
-		error = error + 2*dy;
+		error = error + 2 * dy;
 	}
-
 }
 
 static	void	ft_plot_line_high(int x0, int y0, int x1, int y1, t_coord *t)
@@ -59,7 +58,7 @@ static	void	ft_plot_line_high(int x0, int y0, int x1, int y1, t_coord *t)
 		xi = -1;
 		dx = -dx;
 	}
-	error = 2*dx - dy;
+	error = 2 * dx - dy;
 	x = x0;
 	while (y0++ < y1)
 	{
@@ -67,11 +66,10 @@ static	void	ft_plot_line_high(int x0, int y0, int x1, int y1, t_coord *t)
 		if (error > 0)
 		{
 			x = x + xi;
-			error = error - 2*dy;
+			error = error - 2 * dy;
 		}
-		error = error + 2*dx;
+		error = error + 2 * dx;
 	}
-
 }
 
 void			ft_draw(int x0, int y0, int x1, int y1, t_coord *t)
@@ -91,4 +89,3 @@ void			ft_draw(int x0, int y0, int x1, int y1, t_coord *t)
 			ft_plot_line_high(x0, y0, x1, y1, t);
 	}
 }
-

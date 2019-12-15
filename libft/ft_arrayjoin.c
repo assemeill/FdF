@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 19:39:42 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/11/26 19:11:56 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/14 18:23:34 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	ft_count(char **s1, char **s2)
 	int		n;
 	int		i;
 
-	n = 0;	
+	n = 0;
 	i = 0;
 	if (!s1 && !s2)
 		return (0);
@@ -32,27 +32,27 @@ static int	ft_count(char **s1, char **s2)
 char		**ft_arrayjoin(char **s1, char **s2)
 {
 	int		n;
-	int 	i;
+	int		i;
 	char	**str;
 
-	i = 0;	
+	i = 0;
 	n = ft_count(s1, s2);
 	if (!(str = (char **)malloc(sizeof(char *) * (n + 1))))
 		return (NULL);
 	while (*s1)
-	{	
-		if (!(str[i] = (char *)malloc(sizeof(char) * (ft_letters_count(*s1) + 1))))
+	{
+		if (!(str[i] = (char *)malloc(sizeof(char)
+		* (ft_letters_count(*s1) + 1))))
 			return (NULL);
-		str[i] = ft_strcpy(str[i], *s1);
-		s1++;
+		str[i] = ft_strcpy(str[i], (*s1)++);
 		i++;
 	}
 	while (*s2)
 	{
-		if (!(str[i] = (char *)malloc(sizeof(char) * (ft_letters_count(*s2) + 1))))
+		if (!(str[i] = (char *)malloc(sizeof(char)
+		* (ft_letters_count(*s2) + 1))))
 			return (NULL);
-		str[i] = ft_strcpy(str[i], *s2);
-		s2++;
+		str[i] = ft_strcpy(str[i], (*s2)++);
 		i++;
 	}
 	return (str);
