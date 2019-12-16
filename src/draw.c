@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 17:57:30 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/14 23:09:26 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/15 17:40:57 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static	void	ft_line_low(int *x0, int *y0, int o, t_coord *t)
 	x = x0[t->i];
 	while (x++ < x0[t->i + o])
 	{
-		mlx_pixel_put(t->mlx_ptr, t->win_ptr, x, y, 0xff4500);
+		mlx_pixel_put(t->mlx_ptr, t->win_ptr, x, y, t->color[t->i]);
 		if (yi[1] > 0)
 		{
 			y = y + yi[0];
@@ -60,7 +60,7 @@ static	void	ft_line_lower(int *x0, int *y0, int o, t_coord *t)
 	x = x0[t->i + o];
 	while (x++ < x0[t->i])
 	{
-		mlx_pixel_put(t->mlx_ptr, t->win_ptr, x, y, 0xff4500);
+		mlx_pixel_put(t->mlx_ptr, t->win_ptr, x, y, t->color[t->i]);
 		if (yi[1] > 0)
 		{
 			y = y + yi[0];
@@ -89,7 +89,7 @@ static	void	ft_line_high(int *x0, int *y0, int o, t_coord *t)
 	y = y0[t->i];
 	while (y++ < y0[t->i + o])
 	{
-		mlx_pixel_put(t->mlx_ptr, t->win_ptr, x, y, 0xff4500);
+		mlx_pixel_put(t->mlx_ptr, t->win_ptr, x, y, t->color[t->i]);
 		if (xi[1] > 0)
 		{
 			x = x + xi[0];
@@ -118,7 +118,7 @@ static	void	ft_line_higher(int *x0, int *y0, int o, t_coord *t)
 	y = y0[t->i + o];
 	while (y++ < y0[t->i])
 	{
-		mlx_pixel_put(t->mlx_ptr, t->win_ptr, x, y, 0xff4500);
+		mlx_pixel_put(t->mlx_ptr, t->win_ptr, x, y, t->color[t->i]);
 		if (xi[1] > 0)
 		{
 			x = x + xi[0];

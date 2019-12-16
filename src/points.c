@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 15:23:37 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/14 22:49:17 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/15 17:39:37 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	ft_manage_points(t_coord *t)
 	mlx_clear_window(t->mlx_ptr, t->win_ptr);
 	ft_panel(t);
 	ft_set_points(t);
+	ft_color(t);
 	ft_iso(t);
 	if (t->projection == 1)
 		ft_projection(t->x, t->y, t);

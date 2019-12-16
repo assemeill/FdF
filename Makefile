@@ -6,15 +6,15 @@
 #    By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/06 13:54:08 by aszhilki          #+#    #+#              #
-#    Updated: 2019/12/14 20:07:56 by aszhilki         ###   ########.fr        #
+#    Updated: 2019/12/15 17:17:12 by aszhilki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra
 
-SRC_NAME = main.c map.c keys.c draw.c points.c scene.c
+SRC_NAME = main.c map.c keys.c draw.c points.c scene.c color.c
 SRC_PATH = ./src/
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 

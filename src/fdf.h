@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 17:56:41 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/14 22:04:40 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/15 17:57:35 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "../libft/libft.h"
 # include "../libft/get_next_line.h"
 # include <math.h>
-# include <stdio.h>
 
 typedef	struct	s_coord
 {
@@ -40,22 +39,23 @@ typedef	struct	s_coord
 	int			*values;
 	int			check;
 	int			i;
+	int			*color;
+	int			scheme;
 }				t_coord;
 
 int				ft_check(t_coord *t);
 void			*ft_to_int_array(t_coord *t);
 void			ft_manage_points(t_coord *t);
 void			ft_draw(int *x0, int *y0, int o, t_coord *t);
-int				ft_close(void *param);
 void			ft_create_scene(t_coord *t);
 void			manage_keys(t_coord *t);
 int				key_press(int keycode, t_coord *t);
-int				ft_close(void *param);
+int				ft_close(void *param, t_coord *t);
 void			ft_set_points(t_coord *t);
-//void			change_pr(t_coord *t);
 void			ft_iso(t_coord *t);
 void			ft_projection(int *x, int *y, t_coord *t);
 int				ft_copy(t_coord *t);
 void			ft_panel(t_coord *t);
+void			ft_color(t_coord *t);
 
 #endif
