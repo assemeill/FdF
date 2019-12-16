@@ -6,7 +6,7 @@
 /*   By: aszhilki <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 18:41:13 by aszhilki          #+#    #+#             */
-/*   Updated: 2019/12/15 17:58:05 by aszhilki         ###   ########.fr       */
+/*   Updated: 2019/12/15 18:15:04 by aszhilki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,13 @@ int				key_press(int keycode, t_coord *t)
 int				ft_close(void *param, t_coord *t)
 {
 	(void)param;
+	free(t->values);
+	free(t->xiso);
+	free(t->yiso);
+	free(t->x);
+	free(t->y);
+	free(t->z);
+	free(t->color);
 	free(t);
 	exit(0);
 }
